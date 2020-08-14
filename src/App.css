@@ -32,3 +32,35 @@ address {
 .navbar-dark {
     background-color: #512DA8;
 }
+table{
+    border: 1px solid rgb(36, 165, 212);
+}
+table td{
+    padding:0.5em 2em;
+}
+table th{
+    background: rgb(36, 165, 212);
+    padding: 0.7em 1em;
+    color:white;
+}
+.quote{
+    border:1px solid rgb(148, 145, 145);
+    padding: 1em 2em;
+    margin: 1em auto;
+}
+.quote blockquote{
+    margin:0;
+    font-size:1.2em;
+}
+.quote p{
+    color:rgb(120, 119, 119);
+}
+.leaders .item{
+    margin: 1em 0;
+}
+.leaders .media .media-left{
+    padding:1.2em;
+}
+.leaders .media .media-body{
+    padding:0 1.2em;
+} 

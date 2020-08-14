@@ -5,6 +5,7 @@ import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import DishDetail from './DishDetailComponent';
 import ContactUs from './ContactUsComponent';
+import AboutUs from './AboutUsComponent';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import DISHES from '../shared/dishes';
 import COMMENTS from '../shared/comments';
@@ -45,6 +46,7 @@ class Main extends Component {
         <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} /> 
         <Route path='/menu/:dishId' component={DishWithId} />
         <Route exact path='/contactUs' component={ContactUs} />
+        <Route path='/aboutUs' component={() => <AboutUs leaders={this.state.leaders} />} />
         <Redirect to='/home' />
       </Switch>
       <Footer /> 
