@@ -3,6 +3,10 @@ import {Breadcrumb, BreadcrumbItem, Label, Col, Button, Row} from 'reactstrap';
 import {LocalForm, Control, Errors} from 'react-redux-form';
 import {Link} from 'react-router-dom';
 
+const required = (val) => val && val.length;
+const onlyLetters = (val) => /^[A-Za-z]{3,}$/.test(val);
+const telNumber = (val) => /^(\+998){1}[0-9]{9}$/.test(val);
+const isEmail = (val) => /^[a-zA-Z0-9]+(@){1}[a-z]+(\.){1}[a-z]{2,}$/.test(val);
 class ContactUs extends Component{
 
     constructor(props){
@@ -65,28 +69,64 @@ class ContactUs extends Component{
                                 <Label htmlFor='firstname' md={2}>First Name</Label>
                                 <Col md={10}>
                                     <Control.text model='.firstname' className='form-control' placeholder='First Name' 
-                                    name='firstname' id='firstname' />
+                                    name='firstname' id='firstname' 
+                                    validators={{
+                                        required,
+                                        onlyLetters
+                                    }}/>
+                                    <Errors className='text-danger' model='.firstname' show='touched'
+                                    messages={{
+                                        required: 'This field is required; ', 
+                                        onlyLetters: 'This field should consist of only letters and must be in length >=3'
+                                    }} />
                                 </Col>
                             </Row>
                             <Row className='form-group'>
                                 <Label htmlFor='lastname' md={2}>Last Name</Label>
                                 <Col md={10}>
                                     <Control.text model='.lastname' className='form-control' id='lastname' 
-                                    placeholder='Last Name' name='lastname' />
+                                    placeholder='Last Name' name='lastname' 
+                                    validators={{
+                                        required,
+                                        onlyLetters
+                                    }}/>
+                                    <Errors className='text-danger' model='.lastname' show='touched'
+                                    messages={{
+                                        required: 'This field is required; ', 
+                                        onlyLetters: 'This field should consist of only letters and must be in length >=3'
+                                    }} />
                                 </Col>
                             </Row>
                             <Row className='form-group'>
                                 <Label htmlFor='contactTel' md={2}>Contact Tel.</Label>
                                 <Col md={10}>
                                     <Control.text model='.telnumber' className='form-control' id='contactTel' 
-                                    name='telnumber' placeholder='Contact Number' />
+                                    name='telnumber' placeholder='Contact Number'
+                                    validators={{
+                                        required,
+                                        telNumber
+                                    }}/>
+                                    <Errors className='text-danger' model='.telnumber' show='touched'
+                                    messages={{
+                                        required: 'This field is required; ', 
+                                        telNumber: 'It should be in the format of +998XXXXXXXXX'
+                                    }} />
                                 </Col>
                             </Row>
                             <Row className='form-group'>
                                 <Label htmlFor='email' md={2}>Email</Label>
                                 <Col md={10}>
                                     <Control.text model='.email' className='form-control' id='email' 
-                                    name='email' placeholder='Email' />
+                                    name='email' placeholder='Email' 
+                                    validators={{
+                                        required,
+                                        isEmail,
+                                    }}/>
+                                    <Errors className='text-danger' model='.email' show='touched'
+                                    messages={{
+                                        required: 'This field is required; ', 
+                                        isEmail: 'Please enter valid email address!'
+                                    }} />
                                 </Col>
                             </Row>
                             <Row className='form-group'>
@@ -101,7 +141,7 @@ class ContactUs extends Component{
                                 </Col>
                                 <Col md={{size:3, offset:1}}>
                                     <Control.select model='.contactType' className='form-control' name='contactType'>
-                                        <option>Tel.</option>
+                                        <option selected={true}>Tel.</option>
                                         <option>Email</option>
                                     </Control.select>                                  
                                 </Col>
@@ -110,7 +150,14 @@ class ContactUs extends Component{
                                 <Label htmlFor='feedback' md={2}>Your Feedback</Label>
                                 <Col md={10}>
                                     <Control.textarea model='.message' className='form-control' id='feedback'
-                                    name='message' rows={8} /> 
+                                    name='message' rows={8} 
+                                    validators={{
+                                        required
+                                    }}/>
+                                    <Errors className='text-danger' model='.message' show='touched'
+                                    messages={{
+                                        required: 'This field is required', 
+                                    }} /> 
                                 </Col>
                             </Row>
                             <Row className='form-group'>
