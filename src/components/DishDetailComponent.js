@@ -33,13 +33,14 @@ function RenderComments({comments}){
 
 const minLength = (len) => (val) => val && val.length > len;
 const maxLength = (len) => (val) => val && val.length <= len;
-class DishDetail extends Component {
+class CommentForm extends Component{
     constructor(props){
         super(props);
         this.state = {
             isModalOpen: false
         }
         this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(values){
@@ -55,32 +56,8 @@ class DishDetail extends Component {
 
     render(){
         return(
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-12'>
-                        <Breadcrumb>
-                            <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
-                        </Breadcrumb>
-                    </div>
-                    <div className='col-12'>
-                        <h2>Dish Detail</h2>
-                        <hr />
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col-12 col-md-5 m-1'>
-                        <RenderDish dish={this.props.dish} />
-                    </div>
-                    <div className='col-12 col-md-5 m-1'>
-                        <h3>Comments</h3>
-                        <ul className='list-unstyled'>
-                            <RenderComments comments={this.props.comments} />
-                        </ul>
-                        <Button color='secondary' onClick={this.toggleModal}><i className='fa fa-pencil fa-lg'></i> Submit Comment</Button>
-                    </div>
-                </div>
+            <React.Fragment>
+                <Button color='secondary' onClick={this.toggleModal}><i className='fa fa-pencil fa-lg'></i> Submit Comment</Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
@@ -118,6 +95,41 @@ class DishDetail extends Component {
                         </LocalForm>
                     </ModalBody>
                 </Modal>
+            </React.Fragment>
+        );
+    }
+}
+
+class DishDetail extends Component {
+    render(){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-12'>
+                        <Breadcrumb>
+                            <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className='col-12'>
+                        <h2>Dish Detail</h2>
+                        <hr />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-12 col-md-5 m-1'>
+                        <RenderDish dish={this.props.dish} />
+                    </div>
+                    <div className='col-12 col-md-5 m-1'>
+                        <h3>Comments</h3>
+                        <ul className='list-unstyled'>
+                            <RenderComments comments={this.props.comments} />
+                        </ul>
+                        <CommentForm />
+                    </div>
+                </div>
+                
             </div>
             
         );
