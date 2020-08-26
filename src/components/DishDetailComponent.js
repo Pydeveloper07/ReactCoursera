@@ -3,6 +3,7 @@ import {Card, CardImg, CardTitle, CardBody, CardText, Label} from 'reactstrap';
 import {Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import {LocalForm, Errors, Control} from 'react-redux-form';
 import {Link} from 'react-router-dom';
+import { addComment } from '../redux/ActionCreators';
 
 function RenderDish({dish}){
     if (dish != null){
@@ -45,7 +46,7 @@ class CommentForm extends Component{
 
     handleSubmit(values){
         this.toggleModal();
-        alert(JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     toggleModal(){
@@ -74,7 +75,7 @@ class CommentForm extends Component{
                             </div>
                             <div className='form-group'>
                                 <Label htmlFor='name'>Your Name</Label>
-                                <Control.text model='.name' id='name' className='form-control' placeholder='Your Name' 
+                                <Control.text model='.author' id='name' className='form-control' placeholder='Your Name' 
                                 validators={{
                                     minLength: minLength(2),
                                     maxLength: maxLength(15)
@@ -126,7 +127,9 @@ class DishDetail extends Component {
                         <ul className='list-unstyled'>
                             <RenderComments comments={this.props.comments} />
                         </ul>
-                        <CommentForm />
+                        <CommentForm 
+                            dishId={this.props.dish.id}
+                            addComment={this.props.addComment} />
                     </div>
                 </div>
                 
