@@ -25,7 +25,7 @@ class ContactUs extends Component{
             <div className="container">
                 <div className='row'>
                     <div className='col-12'>
-                        <Breadcrumb>
+                        <Breadcrumb className='mt-3'>
                             <BreadcrumbItem><Link to={'/home'}>Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>ContactUs</BreadcrumbItem>
                         </Breadcrumb>

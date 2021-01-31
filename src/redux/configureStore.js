@@ -1,8 +1,10 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import Dishes from './dishes';
 import Comments from './comments';
 import Leaders from './leaders';
 import Promotions from './promotions';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 
 export const ConfigureStore = () => {
@@ -11,6 +13,6 @@ export const ConfigureStore = () => {
         comments: Comments,
         leaders: Leaders,
         promotions: Promotions
-    }));
+    }), applyMiddleware(thunk, logger));
     return store;
 }
