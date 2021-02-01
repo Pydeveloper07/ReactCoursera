@@ -20,7 +20,12 @@ function RenderDish({dish}){
     );
 }
 
-function RenderComments({comments}){
+function RenderComments({errMess, comments}){
+    if (errMess){
+        return(
+            <h3>{errMess}</h3>
+        );
+    }
     return comments.map((comment) => {
         return (
             <li key={comment.id}>
@@ -45,7 +50,7 @@ class CommentForm extends Component{
 
     handleSubmit(values){
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     toggleModal(){
@@ -143,11 +148,11 @@ class DishDetail extends Component {
                         <div className='col-12 col-md-5 m-1'>
                             <h3>Comments</h3>
                             <ul className='list-unstyled'>
-                                <RenderComments comments={this.props.comments} />
+                                <RenderComments errMess={this.props.commentsErrMess} comments={this.props.comments} />
                             </ul>
                             <CommentForm 
                                 dishId={this.props.dish.id}
-                                addComment={this.props.addComment} />
+                                postComment={this.props.postComment} />
                         </div>
                     </div>
                     
