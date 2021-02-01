@@ -8,12 +8,14 @@ import ContactUs from './ContactUsComponent';
 import AboutUs from './AboutUsComponent';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {addComment, fetchDishes} from '../redux/ActionCreators';
+import {addComment, fetchDishes, fetchPromos, fetchComments} from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) => (dispatch(addComment(dishId, rating, author, comment))),
   fetchDishes: () => dispatch(fetchDishes()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchComments: () => dispatch(fetchComments()),
   resetFeedbackForm: () => dispatch(actions.reset('feedback'))
 });
 
@@ -30,6 +32,8 @@ class Main extends Component {
   
   componentDidMount(){
     this.props.fetchDishes();
+    this.props.fetchPromos();
+    this.props.fetchComments();
   }
 
   render(){
@@ -38,7 +42,9 @@ class Main extends Component {
         <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]} 
             dishesLoading={this.props.dishes.isLoading}
             dishesErrMess={this.props.dishes.errMess}
-            promotion={this.props.promotions.filter((prom) => prom.featured)[0]}
+            promotion={this.props.promotions.promotions.filter((prom) => prom.featured)[0]}
+            promosLoading={this.props.promotions.isLoading}
+            promosErrMess={this.props.promotions.errMess}
             leader={this.props.leaders.filter((leader) => leader.featured)[0]}
         />
       );
@@ -48,7 +54,8 @@ class Main extends Component {
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => parseInt(match.params.dishId) === dish.id)[0]} 
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
-          comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId))} 
+          comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId))} 
+          commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment}/>
       );
     }
