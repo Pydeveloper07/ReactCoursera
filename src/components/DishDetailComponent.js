@@ -5,18 +5,21 @@ import {LocalForm, Errors, Control} from 'react-redux-form';
 import {Link} from 'react-router-dom';
 import {Loading} from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 function RenderDish({dish}){
     return(
-        <Card>
-            <CardImg width='100%' src={baseUrl + dish.image} alt={dish.name} />
-            <CardBody>
-                <CardTitle>
-                    {dish.name}
-                </CardTitle>
-                <CardText>{dish.description}</CardText>
-            </CardBody>
-        </Card>
+        <FadeTransform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)'}}>
+            <Card>
+                <CardImg width='100%' src={baseUrl + dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>
+                        {dish.name}
+                    </CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+        </FadeTransform>
     );
 }
 
@@ -26,14 +29,20 @@ function RenderComments({errMess, comments}){
             <h3>{errMess}</h3>
         );
     }
-    return comments.map((comment) => {
-        return (
-            <li key={comment.id}>
-                <p>{comment.comment}</p>
-                <p><span>--{comment.author}</span>, <span>{new Intl.DateTimeFormat('en-US', {year:'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</span></p>
-            </li>
-        )
-    });
+    return (
+        <Stagger in>
+            {comments.map((comment) => {
+                return(
+                    <Fade in>
+                        <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p><span>--{comment.author}</span>, <span>{new Intl.DateTimeFormat('en-US', {year:'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</span></p>
+                        </li>
+                    </Fade>
+                )
+            })}
+        </Stagger>
+    );
 }
 
 const minLength = (len) => (val) => val && val.length > len;
